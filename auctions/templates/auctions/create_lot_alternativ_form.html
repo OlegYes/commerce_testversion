@@ -1,0 +1,38 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+                <h2>New Lot</h2>
+                <form action="{% url 'create_lot_alternativ_form' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+            <input autofocus class="form-control" type="text" name="title" placeholder="Name lot">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="text_lot" placeholder="Lot description">
+        </div>
+                    <div>The main image of the lot:</div>
+                    {{ form.main_image_lot }}<br>
+                    <br><div>Images for the Lot:</div>
+                    {{ form.image_lot1 }}<br>
+                    <br>{{ form.image_lot2 }}<br>
+                    <br>{{ form.image_lot3 }}<br>
+                    <br>{{ form.image_lot4 }}<br>
+                    <br>{{ form.image_lot5 }}<br>
+                    <br>{{ form.image_lot6 }}<br>
+                    <br><div>Select a category:  {{ form.category }}</div>
+                    <div class="front-control"><br><div>Starting price:</div>
+                    {{ form.cost_initial }}<br></div>
+                    <br><div>Lot closing date:</div>
+                    {{ form.close_lot_datetime }}<br>
+                    <br><input class="btn btn-primary" type="submit" value="Create">
+                </form>
+
+            {% else %}
+                Not signed in.
+            {% endif %}
+
+
+
+
+{% endblock %}

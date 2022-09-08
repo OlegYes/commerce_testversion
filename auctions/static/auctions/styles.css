@@ -1,0 +1,28 @@
+body {
+    padding: 10px;
+}
+
+form {
+    margin-left: 32%;
+    width: 500px;
+    margin-top: 50px;
+
+}
+
+button {
+    position: relative;
+    left: 32%; top: 50%;
+}
+
+.my-carousel {
+    position: absolute;
+    max-width: 400px;
+    margin-left: 0;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.times_to_close {
+
+}

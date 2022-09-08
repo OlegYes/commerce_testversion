@@ -1,0 +1,103 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+                <h2>New Lot</h2>
+                <form action="{% url 'create_lot' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="module aligned ">
+                    <div class="form-row field-title">
+                            <div>
+                                    <label class="required" for="id_title">Name lot:</label>
+                                        {{ form.title }}
+                            </div>
+                    </div>
+                    <div class="form-row field-text_lot">
+                            <div>
+                                    <label class="required" for="id_text_lot">Information for lot:</label>
+                                        {{ form.text_lot }}
+                            </div>
+                    </div>
+                        <br>
+                    <div class="form-row field-main_image">
+                            <div>
+                                    <label for="id_main_image">Main image:</label>
+
+                                        {{ form.main_image }}
+                            </div>
+                    </div>
+                    <div class="form-row field-image1">
+                            <div>
+                                    <label for="id_image1">Image1:</label>
+
+                                        {{ form.image1 }}
+                            </div>
+                    </div>
+        <div class="form-row field-image2">
+                <div>
+                        <label for="id_image2">Image2:</label>
+                            <input type="file" name="image2" accept="image/*" id="id_image2">
+                </div>
+        </div>
+        <div class="form-row field-image3">
+                <div>
+                        <label for="id_image3">Image3:</label>
+                            <input type="file" name="image3" accept="image/*" id="id_image3">
+                </div>
+        </div>
+        <div class="form-row field-image4">
+                <div>
+                        <label for="id_image4">Image4:</label>
+                            <input type="file" name="image4" accept="image/*" id="id_image4">
+                </div>
+        </div>
+        <div class="form-row field-image5">
+                <div>
+                        <label for="id_image5">Image5:</label>
+                            <input type="file" name="image5" accept="image/*" id="id_image5">
+                </div>
+        </div>
+        <div class="form-row field-image6">
+                <div>
+                        <label for="id_image6">Image6:</label>
+                            <input type="file" name="image6" accept="image/*" id="id_image6">
+                </div>
+        </div>
+        <div class="form-row field-image7">
+                <div>
+                        <label for="id_image7">Image7:</label>
+                            <input type="file" name="image7" accept="image/*" id="id_image7">
+                </div>
+        </div>
+                        <div class="form-row ">
+                <div>
+                        <br><div>Select a category:  {{ form.category }}</div>
+                </div>
+        </div>
+        <div class="front-control"><br><div>Starting price:</div>
+                    {{ form.cost_initial }}<br></div>
+                    <br><div>Lot closing date:</div>
+                    {{ form.close_lot_date }} {{ form.close_lot_time }}<br>
+
+                    <br><span>{{ error }}</span>
+                    <br><button class="btn btn-primary" type="submit" >Create</button>
+</fieldset>
+
+
+
+
+
+
+
+
+
+                </form>
+
+            {% else %}
+                Not signed in.
+            {% endif %}
+
+
+
+
+{% endblock %}
