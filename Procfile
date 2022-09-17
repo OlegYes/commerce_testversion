@@ -1,1 +1,1 @@
-worker: python manage.py runserver
+web: ginicorn flowerashop.wsgi --log-file -
