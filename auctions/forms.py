@@ -1,9 +1,26 @@
-from .models import Lots, Category
+from .models import Lots, Category, Coments
 from django import forms
 
 #class CreatelotForm(forms.Form):
 
+class ByLotForm(forms.ModelForm):
+    class Meta:
+        model = Lots
+        fields = ['cost_lot']
+        cost_lot = forms.DecimalField(max_digits=19, decimal_places=10)
 
+
+class FormComents(forms.ModelForm):
+    class Meta:
+        model = Coments
+        fields = ['text_Coment']
+        # text_Coment =
+        widgets = {
+            "text_Coment": forms.Textarea(attrs={
+                        "class": "form-control",
+                        "placeholder": "Leave a review"
+
+                    }) }
 
 
 

@@ -1,5 +1,6 @@
 body {
     padding: 10px;
+    background-color: #3366CC;
 }
 
 form {
@@ -9,13 +10,19 @@ form {
 
 }
 
-button {
+.batonCreateLot {
     position: relative;
     left: 32%; top: 50%;
 }
 
+.Make_a_Beat_button {
+    position: relative;
+    left: 32%; top: 13%;
+}
+
 .my-carousel {
-    position: absolute;
+    float:left; /* Выравнивание по левому краю */
+    margin: 7px 7px 7px 0; /* Отступы вокруг картинки */
     max-width: 400px;
     margin-left: 0;
     margin-right: auto;
@@ -23,6 +30,42 @@ button {
     padding-right: 16px;
 }
 
-.times_to_close {
+.Timer_to_close {
 
+    margin-left: 700;
+    margin-right: 700;
+    padding-left: 16px;
+    padding-right: 16px;
 }
+
+.text_lot {
+
+
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.Buyer_lot {
+
+    outline: 2px solid #CCCCCC; /* Чёрная рамка */
+}
+
+.images_container {
+    height: 200px;
+}
+
+.img_card {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.card_title {
+    height: 50px;
+    overflow: hidden;
+}
+
+
+
+
+

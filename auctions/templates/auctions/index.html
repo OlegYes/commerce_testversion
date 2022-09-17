@@ -3,6 +3,28 @@
 {% block body %}
     <h2>Active Listings</h2>
 
-    TODO
+    <section class="main-content">
+        <div class="container">
+            <div class="row">
+                 {% for el in all_lots %}
+                <br>
+                <div class="col-lg-4 col-sm-6 mb-3">
+
+                <div class="card" style="width: 18rem;">
+                    <div class="images_container">
+                        <img src="{{ el.main_image.url }}" class="card-img-top img_card" alt="..."></div>
+                  <div class="card-body">
+                    <h5 class="card-title card_title">{{ el.title }}</h5>
+                    <p class="card-text">{{ el.name_buyer_lot }}: {{ el.cost_lot }} $<br>Close:{{ el.close_lot_date }}, {{ el.close_lot_time }}</p>
+                    <a href="{{ el.id }}" class="btn btn-primary">in more detail</a>
+                  </div>
+                </div>
+
+                </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 
 {% endblock %}

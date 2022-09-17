@@ -21,6 +21,11 @@ class Category(models.Model):
         return self.name
 
 
+class Coments(models.Model):
+    id = models.AutoField(primary_key=True)
+    text_Coment = models.TextField("Coment")
+    coment_by = models.ForeignKey('User', on_delete=models.CASCADE, default=None, null=True)
+
 
 
 

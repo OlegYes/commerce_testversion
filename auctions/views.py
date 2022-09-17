@@ -3,13 +3,14 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .forms import LotForm
+from .forms import LotForm, ByLotForm, FormComents
 from .models import *
 from django.views.generic import DetailView
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    all_lots = Lots.objects.all()
+    return render(request, "auctions/index.html", {"all_lots": all_lots})
 
 
 def login_view(request):
@@ -43,20 +44,44 @@ class LotDeteilView(DetailView):
     context_object_name = "Lot_data"
 
 def testhtml(request):
-    lot = Lots.objects.get(id=7)
-    lot_date = lot.close_lot_date
-    lot_time = lot.close_lot_time
-    print(lot_date, lot_time)
-    t = f"{lot_date}T{lot.close_lot_time}Z"
-    return render(request, 'auctions/testhtml.html', {'data': lot, "Time_Close": t})
+    all_lots = Lots.objects.all()
+    #print(all_lots)
+    return render(request, 'auctions/testhtml.html', {"all_lots": all_lots})
+
 
 
 def LotData(request, my_lot_id):
     lot = Lots.objects.get(id=my_lot_id)
+    #print(f"{lot.close_lot_date.year}-{lot.close_lot_date.month}-{lot.close_lot_date.day }T{lot.close_lot_time.hour }:{lot.close_lot_time.minute }:{lot.close_lot_time.second }Z")
+    error = ""
+    #lot = Lots.objects.get(id=18)
+    if request.method == "POST":
+        print(request.POST)
+        if request.method == "POST":
 
-
-    return render(request, 'auctions/lot_view.html', {'data': lot,
-    'none':''})
+            print(request.user, request.POST)
+            form = ByLotForm(request.POST)
+            # print(form.__dict__)
+            if form.is_valid():
+                # print(form.cleaned_data['cost_lot'])
+                if form.cleaned_data['cost_lot'] >= lot.cost_lot + 10:
+                    lot.cost_lot = form.cleaned_data['cost_lot']
+                    lot.name_buyer_lot = request.user
+                    lot.save()
+                else:
+                    error = "Your bid must exceed the current bid by at least $10"
+            else:
+                error = "Error input form"
+    else:
+        form = LotForm()
+    formComent = FormComents()
+    # print(formComent)
+    #print(form)
+    lot_date = lot.close_lot_date
+    lot_time = lot.close_lot_time
+    t = f"{lot_date}T{lot.close_lot_time}Z"
+    return render(request, 'auctions/lot_view.html', {'data': lot, "Time_Close": t, 'form': form, "error": error,
+    'none':'', 'formComent': formComent})
 
 
 def my_lots(request):
@@ -84,11 +109,11 @@ def addlot(request):
     error =""
     if request.method == "POST":
         form = LotForm(request.POST, request.FILES)
-        print(form.__dict__)
+        #print(form.__dict__)
 
 
         if form.is_valid():
-            print(form.cleaned_data)
+            #print(form.cleaned_data)
 
 
             forma = Lots(
