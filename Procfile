@@ -1,1 +1,1 @@
-web: ginicorn flowerashop.wsgi --log-file -
+web: ginicorn djangoauctione.wsgi --log-file -
