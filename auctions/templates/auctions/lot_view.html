@@ -110,27 +110,14 @@
     </ul>
   </li>
 
+  {% if data.lot_close == False %}
   <li class="nav-item">
     <button type="button" class="btn btn-primary Make_a_Beat_button" data-toggle="modal" data-target="#exampleModal">Make a bet</button>
   </li>
-</ul>
-<br>
-<!-- COMMENTS -->
-<form action="{% url 'create_lot' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-  <fieldset class="module aligned ">
-<div>
-<label class="required" for="id_text_Coment">Comments:</label>
-                                        {{ formComent.text_Coment }}
-  <br>
-</div>
-    <button class="btn btn-primary batonCreateLot" type="submit" >Leave a review</button>
-</fieldset>
-
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <form action="{% url 'testhtml' %}" class="CostForm"  method="POST">
+  <form  class="CostForm"  method="POST">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -159,6 +146,42 @@
     </div>
   </form>
 </div>
+
+
+  {% endif %}
+</ul>
+<br>
+<!-- COMMENTS -->
+<div>
+  <div class="card" style="width: 18rem;">
+  <div class="card-header">
+    Comments
+  </div>
+  </div>
+  <br>
+{% for el in comments %}
+<div class="card" style="width: 18rem;">
+  <div class="card-header">
+    {{ el.coment_by }}
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">{{ el.text_Coment }}</li>
+  </ul>
+</div>
+<br>
+{% endfor %}
+</div>
+<form  method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+  <fieldset class="module aligned ">
+<div>
+<label class="required" for="id_text_Coment">Comments:</label>
+                                        {{ formComent.text_Coment }}
+  <br>
+</div>
+    <button class="btn btn-primary batonCreateLot" type="submit" >Leave a review</button>
+</fieldset>
+</form>
 
 
 <!--Timer-->
