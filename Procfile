@@ -1,1 +1,1 @@
-web: ginicorn djangoauctione.wsgi --log-file -
+worker: python manage.py runserver

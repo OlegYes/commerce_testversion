@@ -6,6 +6,7 @@ from django.urls import reverse
 from .forms import LotForm, ByLotForm, FormComents
 from .models import *
 from django.views.generic import DetailView
+import datetime
 
 
 def index(request):
@@ -52,14 +53,26 @@ def testhtml(request):
 
 def LotData(request, my_lot_id):
     lot = Lots.objects.get(id=my_lot_id)
-    #print(f"{lot.close_lot_date.year}-{lot.close_lot_date.month}-{lot.close_lot_date.day }T{lot.close_lot_time.hour }:{lot.close_lot_time.minute }:{lot.close_lot_time.second }Z")
+    comments = Coments.objects.filter(that_commented=lot)
+    #print(comments)
+    datetimeNow = datetime.datetime.now()
+    #print(datetimeNow)
+    datetimeCloseLot = datetime.datetime.combine(lot.close_lot_date, lot.close_lot_time)
+    #print(datetimeCloseLot)
+    if datetimeNow >= datetimeCloseLot:
+        lot.lot_close = True
+        lot.save()
+    else:
+        lot.lot_close = False
+        lot.save()
+    print(lot.lot_close)
     error = ""
     #lot = Lots.objects.get(id=18)
+    #print(request.POST)
     if request.method == "POST":
-        print(request.POST)
-        if request.method == "POST":
-
-            print(request.user, request.POST)
+        #print(request.POST)
+        if "text_Coment" not in request.POST:
+            #print(request.user, request.POST)
             form = ByLotForm(request.POST)
             # print(form.__dict__)
             if form.is_valid():
@@ -72,6 +85,18 @@ def LotData(request, my_lot_id):
                     error = "Your bid must exceed the current bid by at least $10"
             else:
                 error = "Error input form"
+
+
+        else:
+            #print("++++")
+            form = FormComents(request.POST)
+            if form.is_valid():
+                comment = Coments()
+                comment.text_Coment = form.cleaned_data["text_Coment"]
+                comment.coment_by = User.objects.get(username=request.user)
+                comment.that_commented = lot
+                comment.save()
+                #print(form.cleaned_data)
     else:
         form = LotForm()
     formComent = FormComents()
@@ -81,7 +106,7 @@ def LotData(request, my_lot_id):
     lot_time = lot.close_lot_time
     t = f"{lot_date}T{lot.close_lot_time}Z"
     return render(request, 'auctions/lot_view.html', {'data': lot, "Time_Close": t, 'form': form, "error": error,
-    'none':'', 'formComent': formComent})
+    'none':'', 'formComent': formComent, 'comments': comments})
 
 
 def my_lots(request):
